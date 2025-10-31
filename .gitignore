@@ -1,0 +1,6 @@
+# Docker volumes
+*.log
+
+# MySQL data directories
+data/
+

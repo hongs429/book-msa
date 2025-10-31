@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  # Rental 서비스용 MySQL
+  book-msa-rental-db:
+    image: mysql:8.0
+    container_name: book-msa-rental-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: rental_db
+      MYSQL_USER: rental_user
+      MYSQL_PASSWORD: 12345678
+      TZ: Asia/Seoul
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data/rental-db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  # User 서비스용 MySQL
+  book-msa-user-db:
+    image: mysql:8.0
+    container_name: book-msa-user-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user_user
+      MYSQL_PASSWORD: 12345678
+      TZ: Asia/Seoul
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data/user-db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  # Book 서비스용 MySQL
+  book-msa-book-db:
+    image: mysql:8.0
+    container_name: book-msa-book-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: book_db
+      MYSQL_USER: book_user
+      MYSQL_PASSWORD: 12345678
+      TZ: Asia/Seoul
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./data/book-db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
