@@ -1,12 +1,14 @@
 package com.msa.rental.domain.model.vo;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * RentalCard 고유 번호를 나타내는 Value Object
@@ -15,13 +17,16 @@ import lombok.ToString;
  * JPA @Embeddable 사용 또는 분산 시스템(예: Kafka)에서 직렬화가 필요한 경우를 위해
  * Serializable을 구현합니다.
  */
-@Getter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class RentalCardNo {
-    
-    private final String no;
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
+public class RentalCardNo implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 123L;
+
+    @Column(name = "rental_card_no")
+    private String no;
 
     /**
      * 새로운 RentalCardNo를 생성합니다.
@@ -44,10 +49,4 @@ public class RentalCardNo {
     public static RentalCardNo of(String no) {
         return new RentalCardNo(no);
     }
-
-//    public static void main(String[] args) {
-//        RentalCardNo rentalCardNo = RentalCardNo.of();
-//        System.out.println(rentalCardNo);
-//        System.out.println(rentalCardNo.getNo());
-//    }
 }

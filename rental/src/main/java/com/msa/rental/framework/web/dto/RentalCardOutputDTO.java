@@ -27,6 +27,7 @@ public class RentalCardOutputDTO {
         rentDTO.setMemberId(rental.getMember().getId());
         rentDTO.setMemberName(rental.getMember().getName());
         rentDTO.setRentStatus(rental.getRentalStatus().toString());
+        rentDTO.setTotalLateFee(rental.getTotalLateFee().getPoint());
         rentDTO.setTotalRentalCnt((long) rental.getRentalItems().size());
         rentDTO.setTotalReturnCnt((long) rental.getReturnItems().size());
         rentDTO.setTotalOverdueCnt(rental.getRentalItems().stream().filter(RentalItem::isOverdue).count());

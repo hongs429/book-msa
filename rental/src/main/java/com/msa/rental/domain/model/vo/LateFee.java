@@ -1,19 +1,18 @@
 package com.msa.rental.domain.model.vo;
 
 
-import lombok.AccessLevel;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
 public class LateFee {
 
-    private final long point;
+    private long point;
 
     public LateFee addPoint(long point) {
         return new  LateFee(this.point + point);

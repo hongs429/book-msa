@@ -6,7 +6,16 @@ import com.msa.rental.domain.model.vo.Item;
 import com.msa.rental.domain.model.vo.LateFee;
 import com.msa.rental.domain.model.vo.RentalCardNo;
 import com.msa.rental.domain.model.vo.RentalStatus;
-import com.msa.rental.domain.model.vo.ReturnItem;
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.EmbeddedId;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OrderColumn;
+import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -18,16 +27,38 @@ import lombok.NoArgsConstructor;
 /**
  * 어그리거트
  */
-
+@Entity
+@Table(name = "rental_card")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class RentalCard {
+    @EmbeddedId
     private RentalCardNo rentalCardNo;
+
+    @Embedded
     private IDName member;
+
+    @Enumerated(EnumType.STRING)
     private RentalStatus rentalStatus;
+
+    @Embedded
     private LateFee totalLateFee;
+
+    @ElementCollection
+    @CollectionTable(
+            name = "rental_item",
+            joinColumns = @JoinColumn(name = "rental_card_no")
+    )
+    @OrderColumn(name = "item_order")
     private List<RentalItem> rentalItems = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(
+            name = "return_item",
+            joinColumns = @JoinColumn(name = "rental_card_no")
+    )
+    @OrderColumn(name = "item_order")
     private List<ReturnItem> returnItems = new ArrayList<>();
 
     private void addRentalItem(RentalItem rentalItem) {

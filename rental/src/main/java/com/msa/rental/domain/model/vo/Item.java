@@ -1,20 +1,19 @@
 package com.msa.rental.domain.model.vo;
 
 
-import lombok.AccessLevel;
+import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@ToString
-@EqualsAndHashCode
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Embeddable
 public class Item {
 
-    private final Integer id;
-    private final String title;
+    private Integer id;
+    private String title;
 
     public static Item of(Integer id, String title) {
         return new Item(id, title);
