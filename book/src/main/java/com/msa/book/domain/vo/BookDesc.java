@@ -12,9 +12,15 @@ import lombok.NoArgsConstructor;
 public class BookDesc {
     private String description;
     private String author;
-    private String publisher;
     private String isbn;
     private LocalDate publicationDate;
     private BookSource source;
 
+    public static BookDesc createBookDesc(String author,
+                                          String isbn,
+                                          String description,
+                                          LocalDate publicationDate,
+                                          BookSource source) {
+        return new BookDesc(description, author, isbn, publicationDate, source);
+    }
 }
