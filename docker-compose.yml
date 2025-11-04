@@ -52,3 +52,19 @@ services:
       - ./data/book-db:/var/lib/mysql
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
+  # BestBook 서비스용 MongoDB
+  book-msa-bestbook-db:
+    image: mongo:6.0
+    container_name: book-msa-bestbook-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: bestbook_admin
+      MONGO_INITDB_ROOT_PASSWORD: 12345678
+      MONGO_INITDB_DATABASE: bestbook_db
+      TZ: Asia/Seoul
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./data/bestbook-db:/data/db
+    command: --wiredTigerCacheSizeGB 0.5
+
