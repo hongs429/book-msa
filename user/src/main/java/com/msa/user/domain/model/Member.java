@@ -18,15 +18,16 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "member")
 @AllArgsConstructor
-@NoArgsConstructor
-@Data
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +55,12 @@ public class Member {
 
     public static Member registerMember(IDName idName, Password pwd, Email email) {
         Member member = new Member();
-        member.setIdName(idName);
-        member.setPassword(pwd);
-        member.setEmail(email);
-        member.setPoint(Point.createPoint());
-        member.addAuthority(new Authority(UserRole.USER));
+        member.idName = idName;
+        member.password = pwd;
+        member.email = email;
+        member.point = Point.createPoint();
+        member.authorities = new ArrayList<>();
+        member.authorities.add(new Authority(UserRole.USER));
         return member;
     }
 
@@ -67,11 +69,13 @@ public class Member {
     }
 
     public long savePoint(long point) {
-        return this.point.addPoint(point);
+        this.point = this.point.addPoint(point);
+        return this.point.getPointValue();
     }
 
     public long usePoint(long point) {
-        return this.point.removePoint(point);
+        this.point = this.point.removePoint(point);
+        return this.point.getPointValue();
     }
 
     public Member login(IDName idName, Password password) {
@@ -79,5 +83,19 @@ public class Member {
     }
 
     public void logout(IDName idName) {
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof Member)) return false;
+
+        Member member = (Member) obj;
+        return member.MemberNo != null && this.MemberNo.equals(member.MemberNo);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

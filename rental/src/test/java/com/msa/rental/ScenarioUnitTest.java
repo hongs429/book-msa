@@ -2,10 +2,10 @@ package com.msa.rental;
 
 
 import com.msa.rental.domain.model.RentalCard;
-import com.msa.rental.domain.model.RentalItem;
+import com.msa.rental.domain.model.vo.RentalItem;
 import com.msa.rental.domain.model.vo.IDName;
 import com.msa.rental.domain.model.vo.Item;
-import com.msa.rental.domain.model.ReturnItem;
+import com.msa.rental.domain.model.vo.ReturnItem;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

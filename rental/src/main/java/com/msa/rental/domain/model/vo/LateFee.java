@@ -2,20 +2,23 @@ package com.msa.rental.domain.model.vo;
 
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
+@EqualsAndHashCode
 @Embeddable
 public class LateFee {
 
-    private long point;
+    private final long point;
 
     public LateFee addPoint(long point) {
-        return new  LateFee(this.point + point);
+        return new LateFee(this.point + point);
     }
 
     public LateFee subtractPoint(long point) {
@@ -23,10 +26,10 @@ public class LateFee {
             throw new IllegalArgumentException("Late fee cannot be negative");
         }
 
-        return new  LateFee(this.point - point);
+        return new LateFee(this.point - point);
     }
 
-    public  static LateFee createLateFee(){
+    public static LateFee createLateFee() {
         return new LateFee(0);
     }
 }

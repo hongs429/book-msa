@@ -10,6 +10,6 @@ import lombok.Setter;
 public class MemberInfoDTO {
     private String id;
     private String Name;
-    private String passWord;
+    private String password;
     private String email;
 }

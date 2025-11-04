@@ -1,35 +1,32 @@
 package com.msa.user.domain.vo;
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@EqualsAndHashCode
 @Embeddable
 public class Point {
-    public long pointValue;
+    public final long pointValue;
 
-    public long addPoint(long point) {
-        this.setPointValue(this.pointValue + point);
-        return this.pointValue;
+    public Point addPoint(long point) {
+        return new Point(this.getPointValue() + point);
     }
 
-    public long removePoint(long point) {
+    public Point removePoint(long point) {
         if (point > this.pointValue) {
             throw new RuntimeException("기존 보유 Point보다 적어 삭제할 수 없습니다.");
         }
-        setPointValue(this.pointValue - point);
-        return this.pointValue;
+        return new Point(this.getPointValue() - point);
     }
 
     public static Point createPoint() {
         return new Point(0L);
-    }
-
-    public static Point sample() {
-        return new Point(10L);
     }
 }

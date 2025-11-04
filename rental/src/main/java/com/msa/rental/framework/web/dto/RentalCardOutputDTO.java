@@ -1,7 +1,7 @@
 package com.msa.rental.framework.web.dto;
 
 import com.msa.rental.domain.model.RentalCard;
-import com.msa.rental.domain.model.RentalItem;
+import com.msa.rental.domain.model.vo.RentalItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

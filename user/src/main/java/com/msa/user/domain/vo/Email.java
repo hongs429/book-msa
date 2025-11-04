@@ -1,17 +1,18 @@
 package com.msa.user.domain.vo;
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@EqualsAndHashCode
 @Embeddable
 public class Email {
-    public String address;
-    public static Email sample(){
-        return new Email("scant10@gmail.com");
-    } }
+    public final String address;
+}
 

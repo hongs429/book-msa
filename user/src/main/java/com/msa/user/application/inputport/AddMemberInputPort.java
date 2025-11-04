@@ -23,11 +23,11 @@ public class AddMemberInputPort implements AddMemberUseCase {
     @Override
     public MemberOutputDTO addMember(MemberInfoDTO memberInfoDTO) {
         IDName idName = new
-                IDName(memberInfoDTO.getId(),memberInfoDTO.getName());
+                IDName(memberInfoDTO.getId(), memberInfoDTO.getName());
         Password pwd = new
-                Password(memberInfoDTO.getPassWord(),memberInfoDTO.getPassWord());
+                Password(memberInfoDTO.getPassword(), memberInfoDTO.getPassword());
         Email email = new Email(memberInfoDTO.getEmail());
-        Member addedMember = Member.registerMember(idName,pwd,email);
+        Member addedMember = Member.registerMember(idName, pwd, email);
         Member savedMember = memberOutputPort.saveMember(addedMember);
         return MemberOutputDTO.mapToDTO(savedMember);
     }

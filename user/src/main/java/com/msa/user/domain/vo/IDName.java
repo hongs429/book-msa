@@ -1,20 +1,18 @@
 package com.msa.user.domain.vo;
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@EqualsAndHashCode
 @Embeddable
-public class IDName  {
-    private String id;
-    private String name;
-    public static IDName sample(){
-        return new IDName("scant","jenny");
-    }
-    public static void main(String[] args) {
-        System.out.println(sample().toString());
-    } }
+public class IDName {
+    private final String id;
+    private final String name;
+}

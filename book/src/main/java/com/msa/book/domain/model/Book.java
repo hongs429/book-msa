@@ -15,13 +15,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "book")
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Book {
@@ -53,14 +54,14 @@ public class Book {
                                  Location location) {
 
         BookDesc bookDesc = BookDesc.createBookDesc(
-                author,isbn,description,publicationDate,source);
+                author, isbn, description, publicationDate, source);
 
         Book book = new Book();
-        book.setTitle(title);
-        book.setDesc(bookDesc);
-        book.setClassification(classification);
-        book.setLocation(location);
-        book.setBookStatus(BookStatus.ENTERED);
+        book.title = title;
+        book.desc = bookDesc;
+        book.classification = classification;
+        book.location = location;
+        book.bookStatus = BookStatus.ENTERED;
         return book;
     }
 
@@ -72,5 +73,18 @@ public class Book {
     public Book makeUnavailable() {
         this.bookStatus = BookStatus.UNAVAILABLE;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Book)) return false;
+        Book book = (Book) o;
+        return no != null && Objects.equals(no, book.no);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

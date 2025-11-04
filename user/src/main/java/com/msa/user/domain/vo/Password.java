@@ -1,17 +1,18 @@
 package com.msa.user.domain.vo;
 
 import jakarta.persistence.Embeddable;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
+@EqualsAndHashCode
 @Embeddable
 public class Password {
     public String presentPWD;
     public String pastPWD;
-    public static Password sample(){
-        return new Password("12345","abcde");
-    } }
+}

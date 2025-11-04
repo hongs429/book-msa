@@ -1,7 +1,7 @@
 package com.msa.rental.framework.web.dto;
 
 
-import com.msa.rental.domain.model.RentalItem;
+import com.msa.rental.domain.model.vo.RentalItem;
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

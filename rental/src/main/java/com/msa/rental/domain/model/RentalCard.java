@@ -5,7 +5,9 @@ import com.msa.rental.domain.model.vo.IDName;
 import com.msa.rental.domain.model.vo.Item;
 import com.msa.rental.domain.model.vo.LateFee;
 import com.msa.rental.domain.model.vo.RentalCardNo;
+import com.msa.rental.domain.model.vo.RentalItem;
 import com.msa.rental.domain.model.vo.RentalStatus;
+import com.msa.rental.domain.model.vo.ReturnItem;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Embedded;
@@ -20,8 +22,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 /**
@@ -29,7 +32,7 @@ import lombok.NoArgsConstructor;
  */
 @Entity
 @Table(name = "rental_card")
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 public class RentalCard {
@@ -81,11 +84,12 @@ public class RentalCard {
     public static RentalCard of(IDName creator) {
         RentalCard rentalCard = new RentalCard();
 
-        rentalCard.setRentalCardNo(RentalCardNo.of());
-        rentalCard.setMember(creator);
-
-        rentalCard.setRentalStatus(RentalStatus.RENT_AVAILABLE);
-        rentalCard.setTotalLateFee(LateFee.createLateFee());
+        rentalCard.rentalCardNo = RentalCardNo.of();
+        rentalCard.member = creator;
+        rentalCard.rentalStatus = RentalStatus.RENT_AVAILABLE;
+        rentalCard.totalLateFee = LateFee.createLateFee();
+        rentalCard.rentalItems = new ArrayList<>();
+        rentalCard.returnItems = new ArrayList<>();
 
         return rentalCard;
     }
@@ -115,19 +119,25 @@ public class RentalCard {
     }
 
     public RentalCard overdueItem(Item item) {
-        RentalItem rentalItem = this.rentalItems.stream()
-                .filter(i -> i.getItem().equals(item))
-                .findFirst()
-                .orElse(null);
+        // RentalItem이 불변이므로 리스트에서 찾아서 새로운 불변 객체로 교체
+        for (int i = 0; i < this.rentalItems.size(); i++) {
+            RentalItem rentalItem = this.rentalItems.get(i);
+            if (rentalItem.getItem().equals(item)) {
+                // 새로운 연체된 RentalItem 생성
+                RentalItem overdueRentalItem = new RentalItem(
+                        rentalItem.getItem(),
+                        rentalItem.getRentalDate(),
+                        true,  // overdue = true
+                        LocalDate.now().minusDays(1)
+                );
 
-        if (rentalItem == null) {
-            return this;
+                // 리스트에서 교체
+                this.rentalItems.set(i, overdueRentalItem);
+                this.rentalStatus = RentalStatus.RENT_UNAVAILABLE;
+                break;
+            }
         }
 
-        rentalItem.setOverdue(true);
-        this.rentalStatus = RentalStatus.RENT_UNAVAILABLE;
-
-        rentalItem.setOverdueDate(LocalDate.now().minusDays(1));
         return this;
     }
 
@@ -137,17 +147,17 @@ public class RentalCard {
             throw new IllegalArgumentException("모든 도서가 반납되어야 정지를 해제할 수 있습니다");
         }
 
-        if (this.getTotalLateFee().getPoint() != point) {
+        if (this.totalLateFee.getPoint() != point) {
             throw new IllegalArgumentException("포인트로 연체 해제 불가능");
         }
 
-        setTotalLateFee(totalLateFee.subtractPoint(point));
+        this.totalLateFee = totalLateFee.subtractPoint(point);
 
-        if (this.getTotalLateFee().getPoint() == 0) {
+        if (this.totalLateFee.getPoint() == 0) {
             this.rentalStatus = RentalStatus.RENT_AVAILABLE;
         }
 
-        return this.getTotalLateFee().getPoint();
+        return this.totalLateFee.getPoint();
     }
 
 
@@ -157,7 +167,7 @@ public class RentalCard {
         if (returnDate.isAfter(rentalItem.getOverdueDate())) {
             long point = Period.between(rentalItem.getOverdueDate(), returnDate).getDays() * 10L;
 
-            this.setTotalLateFee(this.totalLateFee.addPoint(point));
+            this.totalLateFee = this.totalLateFee.addPoint(point);
         }
     }
 
@@ -171,8 +181,16 @@ public class RentalCard {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof RentalCard)) return false;
+        RentalCard that = (RentalCard) o;
+        return rentalCardNo != null && Objects.equals(rentalCardNo, that.rentalCardNo);
+    }
 
-
-
-
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

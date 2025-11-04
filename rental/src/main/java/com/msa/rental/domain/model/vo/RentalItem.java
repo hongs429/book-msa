@@ -1,25 +1,27 @@
-package com.msa.rental.domain.model;
+package com.msa.rental.domain.model.vo;
 
 
-import com.msa.rental.domain.model.vo.Item;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
 import java.time.LocalDate;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
-@NoArgsConstructor
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED, force = true)
 @AllArgsConstructor
+@EqualsAndHashCode
 @Embeddable
 public class RentalItem {
 
     @Embedded
-    private Item item;
-    private LocalDate rentalDate;
-    private boolean overdue;
-    private LocalDate overdueDate; //반납 예정일
+    private final Item item;
+    private final LocalDate rentalDate;
+    private final boolean overdue;
+    private final LocalDate overdueDate; //반납 예정일
 
     public static RentalItem of(Item item) {
         return new RentalItem(
