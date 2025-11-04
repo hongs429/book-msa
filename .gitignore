@@ -4,3 +4,6 @@
 # MySQL data directories
 data/
 
+# Claude project notes
+.claude/CLAUDE.md
+
