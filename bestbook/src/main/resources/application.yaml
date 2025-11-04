@@ -1,0 +1,32 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: bestbook
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: bestbook_db
+      username: bestbook_admin
+      password: 12345678
+      authentication-database: admin
+      auto-index-creation: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    default-models-expand-depth: 1
+    default-model-expand-depth: 1
+  api-docs:
+    path: /v3/api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+
+logging:
+  level:
+    org.springframework.data.mongodb: DEBUG
