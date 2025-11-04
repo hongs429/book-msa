@@ -17,7 +17,7 @@ public class InquiryInputPort implements InquiryUseCase {
     private final BookOutputPort bookOutputPort;
 
     @Override
-    public BookOutputDTO getBookInfo(long bookNo) {
+    public BookOutputDTO getBookInfo(Long bookNo) {
         Book loadBook = bookOutputPort.loadBook(bookNo);
         return BookOutputDTO.mapToDTO(loadBook);
     }

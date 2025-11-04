@@ -29,7 +29,7 @@ public class AddBookInputPort implements AddBookUseCase {
                 bookInfoDTO.getDescription(),
                 bookInfoDTO.getPublicationDate(),
                 BookSource.valueOf(bookInfoDTO.getSource()),
-                BookClassification.valueOf(bookInfoDTO.getClassfication()),
+                BookClassification.valueOf(bookInfoDTO.getClassification()),
                 Location.valueOf(bookInfoDTO.getLocation())
         );
 

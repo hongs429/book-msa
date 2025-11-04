@@ -11,6 +11,6 @@ public class BookInfoDTO {
     private String isbn;
     private LocalDate publicationDate;
     private String source;
-    private String classfication;
+    private String classification;
     private String location;
 }
