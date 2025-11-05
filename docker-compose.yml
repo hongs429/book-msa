@@ -58,9 +58,6 @@ services:
     container_name: book-msa-bestbook-db
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: bestbook_admin
-      MONGO_INITDB_ROOT_PASSWORD: 12345678
-      MONGO_INITDB_DATABASE: bestbook_db
       TZ: Asia/Seoul
     ports:
       - "27017:27017"

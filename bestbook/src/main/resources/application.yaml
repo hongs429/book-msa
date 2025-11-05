@@ -9,9 +9,6 @@ spring:
       host: localhost
       port: 27017
       database: bestbook_db
-      username: bestbook_admin
-      password: 12345678
-      authentication-database: admin
       auto-index-creation: true
 
 springdoc:
