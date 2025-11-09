@@ -38,3 +38,22 @@ springdoc:
     path: /v3/api-docs
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
+
+
+producers:
+  topic1:
+    name: rental_result
+
+consumer:
+  topic1:
+    name: rental_rent
+  topic2:
+    name: rental_return
+  topic3:
+    name: overdue_clear
+  topic4:
+    name: point_use
+  groupid:
+    name: member
+kafka:
+  bootstrapAddress: localhost:9092
