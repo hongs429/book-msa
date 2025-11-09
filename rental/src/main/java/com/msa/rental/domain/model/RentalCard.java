@@ -1,6 +1,9 @@
 package com.msa.rental.domain.model;
 
 
+import com.msa.rental.domain.model.event.ItemRented;
+import com.msa.rental.domain.model.event.ItemReturned;
+import com.msa.rental.domain.model.event.OverdueCleared;
 import com.msa.rental.domain.model.vo.IDName;
 import com.msa.rental.domain.model.vo.Item;
 import com.msa.rental.domain.model.vo.LateFee;
@@ -160,7 +163,20 @@ public class RentalCard {
         return this.totalLateFee.getPoint();
     }
 
+    /**
+     * 도메인 이벤트의 생성의 책임은 aggregate root가 가진다
+     */
+    public static ItemRented createItemRentedEvent(IDName idName, Item item, long point) {
+        return new ItemRented(idName, item, point);
+    }
 
+    public static ItemReturned createItemReturnEvent(IDName idName, Item item, long point) {
+        return new ItemReturned(idName, item, point);
+    }
+
+    public static OverdueCleared createOverdueClearedEvent(IDName idName, long point) {
+        return new OverdueCleared(idName, point);
+    }
 
 
     private void calculateLateFee(RentalItem rentalItem, LocalDate returnDate) {
@@ -183,8 +199,12 @@ public class RentalCard {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RentalCard)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof RentalCard)) {
+            return false;
+        }
         RentalCard that = (RentalCard) o;
         return rentalCardNo != null && Objects.equals(rentalCardNo, that.rentalCardNo);
     }
