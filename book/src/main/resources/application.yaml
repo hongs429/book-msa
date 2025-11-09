@@ -39,3 +39,12 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
 
+consumer:
+  topic1:
+    name: rental_rent
+  topic2:
+    name: rental_return
+  groupid:
+    name: book
+
+
