@@ -1,7 +1,6 @@
-package com.msa.book.domain.event;
+package com.msa.bestbook.domain.event;
 
 
-import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

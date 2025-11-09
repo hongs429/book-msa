@@ -1,6 +1,6 @@
-package com.msa.user.domain.event;
+package com.msa.bestbook.domain.event;
 
-import com.msa.user.domain.vo.IDName;
+import com.msa.bestbook.domain.vo.Item;
 import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
